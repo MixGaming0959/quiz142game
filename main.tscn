@@ -1,0 +1,115 @@
+[gd_scene load_steps=3 format=3 uid="uid://bvn6khlpfuvne"]
+
+[ext_resource type="Script" uid="uid://btki0t15m6sc1" path="res://scripts/main.gd" id="1_0xm2m"]
+[ext_resource type="Texture2D" uid="uid://c2pyuv1kevysa" path="res://assets/quiz_game/question_screen.png" id="2_0xm2m"]
+
+[node name="Control" type="Control"]
+layout_mode = 3
+anchor_right = 1.0
+anchor_bottom = 1.004
+offset_right = 3.0
+offset_bottom = -0.320068
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_0xm2m")
+
+[node name="TextureRect" type="TextureRect" parent="."]
+layout_mode = 0
+offset_left = 3.0
+offset_top = -1.0
+offset_right = 1151.0
+offset_bottom = 648.0
+texture = ExtResource("2_0xm2m")
+expand_mode = 1
+
+[node name="Question" type="Label" parent="."]
+layout_mode = 0
+offset_left = 286.0
+offset_top = 238.0
+offset_right = 868.0
+offset_bottom = 377.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 40
+text = "Question"
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 3
+
+[node name="Feedback" type="Label" parent="."]
+layout_mode = 0
+offset_left = 163.0
+offset_top = 37.0
+offset_right = 986.0
+offset_bottom = 166.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 36
+text = "Feedback"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Score" type="Label" parent="."]
+layout_mode = 0
+offset_left = 445.0
+offset_top = 200.0
+offset_right = 712.0
+offset_bottom = 247.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 26
+text = "Score:"
+horizontal_alignment = 1
+
+[node name="ButtonA" type="Button" parent="."]
+layout_mode = 0
+offset_left = 96.0
+offset_top = 474.0
+offset_right = 268.0
+offset_bottom = 577.0
+theme_override_colors/font_hover_color = Color(0.637843, 0.637843, 0.637843, 1)
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 36
+text = "A"
+flat = true
+
+[node name="ButtonB" type="Button" parent="."]
+layout_mode = 0
+offset_left = 475.0
+offset_top = 417.0
+offset_right = 670.0
+offset_bottom = 544.0
+theme_override_colors/font_hover_color = Color(0.639216, 0.639216, 0.639216, 1)
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 36
+text = "B
+"
+flat = true
+
+[node name="ButtonC" type="Button" parent="."]
+layout_mode = 0
+offset_left = 910.0
+offset_top = 467.0
+offset_right = 1086.0
+offset_bottom = 587.0
+theme_override_colors/font_hover_color = Color(0.639216, 0.639216, 0.639216, 1)
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 36
+text = "C"
+flat = true
+
+[node name="RestartButton" type="Button" parent="."]
+layout_mode = 0
+offset_left = 947.0
+offset_top = 13.0
+offset_right = 1137.0
+offset_bottom = 83.0
+theme_override_font_sizes/font_size = 20
+text = "Restart"
+
+[node name="BackButton" type="Button" parent="."]
+layout_mode = 0
+offset_left = 15.0
+offset_top = 13.0
+offset_right = 205.0
+offset_bottom = 82.0
+theme_override_font_sizes/font_size = 20
+text = "Back
+"
