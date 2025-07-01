@@ -66,6 +66,8 @@ extends Control
 var shuffled_questions = []
 var current_question_index = 0
 var score = 0
+var max_timer = 30 # วินาที
+var time_per_question = 1 # วินาที
 
 @onready var labelQuestion = $Question
 @onready var buttonChoices = [$ButtonA, $ButtonB, $ButtonC]
@@ -75,17 +77,45 @@ var score = 0
 @onready var back_button = $BackButton
 @onready var image_rect = $TextureRect
 
+@onready var timer = $Timer
+@onready var timerLabel = $TimeCounter
+
+
 func _ready():
 	restart_button.pressed.connect(restart_game)
 	back_button.pressed.connect(on_click_back)
+	timerLabel.text = ""
 	set_default_color_and_image()
 	start_game()
 
+func _process(_delta: float) -> void:
+	var time_left = timer.time_left
+	var minutes = int(time_left / 60)
+	var seconds = int(time_left) % 60
+	var microseconds = int((time_left - int(time_left)) * 1000)
+
+	if minutes < 1 and seconds <= 10:
+		timerLabel.text = "เวลาคงเหลือ: %02d.%03d" % [seconds, microseconds]
+	else:
+		timerLabel.text = "เวลาคงเหลือ: %02d:%02d" % [minutes, seconds]
+
+	if time_left <= 0.0:
+		current_question_index = shuffled_questions.size()
+		timer.stop()
+		load_question()
+		labelQuestion.text = "เวลาหมดแล้ว!!!"
+		scoreLable.text = "คะแนน: %d" % score
+		timerLabel.text = ""
+
 func start_game():
+	timerLabel.text = "เวลาคงเหลือ: " 
 	restart_button.visible = false
 	shuffled_questions = questions.duplicate()
 	shuffled_questions.shuffle()
 	current_question_index = 0
+	timer.one_shot = true
+	timer.wait_time = max_timer
+	timer.start()
 	load_question()
 
 func restart_game():
@@ -95,9 +125,10 @@ func restart_game():
 func load_question():
 	set_default_color_and_image()
 	
-	scoreLable.text = "Score: %d" % score
+	scoreLable.text = "คะแนน: %d" % score
 	if current_question_index >= shuffled_questions.size():
-		labelQuestion.text = "🎉 คุณตอบคำถามครบแล้ว! คะแนนของคุณ: %d" % score
+		# labelQuestion.text = "🎉 คุณตอบคำถามครบแล้ว! คะแนนของคุณ: %d" % score
+		labelQuestion.text = ""
 		labelFeedback.text = ""
 		for button in buttonChoices:
 			button.visible = false
@@ -129,14 +160,14 @@ func handle_answer(selected_key: String):
 	if selected_key == answer_key:
 		labelFeedback.text = "✅ ถูกต้อง!!"
 		score += question_data["points"]
-		scoreLable.text = "Score: %d" % score
+		scoreLable.text = "คะแนน: %d" % score
 	else:
 		labelFeedback.text = "❌ ผิดนะ คำตอบที่ถูกคือ: %s" % question_data["options"][answer_key]
 
 	set_background_image(selected_key, selected_key == answer_key)
 
 	current_question_index += 1
-	await get_tree().create_timer(2.0).timeout
+	await get_tree().create_timer(time_per_question).timeout
 	load_question()
 
 func set_button_color(name_str: String, color_code: String):
@@ -206,3 +237,10 @@ func on_click_back():
 	# get_tree().change_scene_to_file("res://scenes/main_menu.tscn")
 	score = 0
 	start_game()
+
+func time_left_to_live() -> Array:
+	var timeleft = timer.time_left
+	var minutes = float(timeleft / 60)
+	var seconds = int(timeleft) % 60
+	var microseconds = int(timeleft * 1000) % 1000
+	return [minutes, seconds, microseconds]
