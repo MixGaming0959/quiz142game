@@ -66,7 +66,7 @@ extends Control
 var shuffled_questions = []
 var current_question_index = 0
 var score = 0
-var max_timer = 30 # วินาที
+var max_timer = 60 # วินาที
 var time_per_question = 1 # วินาที
 
 @onready var labelQuestion = $Question
